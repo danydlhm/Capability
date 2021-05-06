@@ -1,4 +1,4 @@
 [core]
-    remote = extras
-['remote "extras"']
-    url = ../extras
+    remote = remote
+['remote "remote"']
+    url = ../~/Accenture/Capability - MLEng - General

@@ -1,0 +1,4 @@
+outs:
+- md5: f60fe32426757178587948e2a93e911b
+  size: 3130960
+  path: spain_energy_market.csv
