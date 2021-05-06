@@ -1,4 +1,4 @@
 [core]
-    remote = remote
-['remote "remote"']
-    url = ../~/Accenture/Capability - MLEng - General
+    remote = onedrive
+['remote "onedrive"']
+    url = C:/Users/d.las.heras.montero/Accenture/Capability - MLEng - General
