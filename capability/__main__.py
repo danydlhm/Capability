@@ -4,7 +4,6 @@ import mlflow
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from urllib.parse import urlparse
 
 import logging
 
@@ -23,10 +22,10 @@ df = pd.read_csv('data\\spain_energy_market.csv')
 df_2 = df.pivot_table(index=['datetime'], columns='name', values='value').reset_index()
 
 # Split the data into training and test sets. (0.75, 0.25) split.
-train, test = train_test_split(df_2.drop(columns=['datetime']).dropna(axis=1))
+train, test = train_test_split(df_2.drop(columns=['datetime']).dropna(axis=1), random_state=40)
 
 target_name = "Precio mercado SPOT Diario ESP"
-other_columns = ['datetime']
+other_columns = []
 
 # The predicted column is "quality" which is a scalar from [3, 9]
 train_x = train.drop([target_name]+other_columns, axis=1)
@@ -52,16 +51,5 @@ with mlflow.start_run():
     mlflow.log_metric("r2", r2)
     mlflow.log_metric("mae", mae)
 
-    # tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
-    #
-    # # Model registry does not work with file store
-    # if tracking_url_type_store != "file":
-    #
-    #     # Register the model
-    #     # There are other ways to use the Model Registry, which depends on the use case,
-    #     # please refer to the doc for more information:
-    #     # https://mlflow.org/docs/latest/model-registry.html#api-workflow
-    #     mlflow.sklearn.log_model(lr, "model", registered_model_name="ElasticnetWineModel")
-    # else:
-    #     mlflow.sklearn.log_model(lr, "model")
-
+    mlflow.log_artifact(local_path='.\\data\\spain_energy_market.csv')
+    mlflow.sklearn.log_model(lr, artifact_path='model')
