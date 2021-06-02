@@ -33,7 +33,7 @@ test_x = test.drop([target_name]+other_columns, axis=1)
 train_y = train[[target_name]]
 test_y = test[[target_name]]
 normalize = True
-
+mlflow.set_experiment('Capability')
 with mlflow.start_run():
 
     lr = LinearRegression(normalize)
