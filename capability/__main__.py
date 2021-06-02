@@ -19,17 +19,18 @@ def eval_metrics(actual, pred):
     return rmse, mae, r2
 
 
-df = pd.read_csv('extras\\spain_energy_market.csv')
+df = pd.read_csv('data\\spain_energy_market.csv')
 df_2 = df.pivot_table(index=['datetime'], columns='name', values='value').reset_index()
 
 # Split the data into training and test sets. (0.75, 0.25) split.
 train, test = train_test_split(df_2.drop(columns=['datetime']).dropna(axis=1))
 
 target_name = "Precio mercado SPOT Diario ESP"
+other_columns = ['datetime']
 
 # The predicted column is "quality" which is a scalar from [3, 9]
-train_x = train.drop([target_name], axis=1)
-test_x = test.drop([target_name], axis=1)
+train_x = train.drop([target_name]+other_columns, axis=1)
+test_x = test.drop([target_name]+other_columns, axis=1)
 train_y = train[[target_name]]
 test_y = test[[target_name]]
 normalize = True
