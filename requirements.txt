@@ -2,3 +2,4 @@ pandas
 pyaml
 scikit-learn
 scipy
+mlflow
